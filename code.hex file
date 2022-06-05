@@ -1,0 +1,43 @@
+
+
+String voice;
+void setup()
+{
+  Serial.begin(9600);            //Set rate for communicating with phone
+  pinMode(6, OUTPUT);       
+  pinMode(5, OUTPUT); 
+}      
+void loop()
+{
+  while(Serial.available())    //Check if there are available bytes to read
+  {
+    delay(3);                 //Delay to make it stable
+    char c = Serial.read();    //Conduct a serial read
+    voice += c;                //Means voice = voice + c
+  }
+    if (voice.length() >0)
+    {
+      Serial.println(voice);
+      if(voice == "light on"){   
+//You can replace 'light on' with anything you want...same applies to others
+        digitalWrite(5, HIGH);
+      }
+      else if(voice == "light off"){
+        digitalWrite(5, LOW);
+      }
+       else if(voice == "turn on fan"){
+        digitalWrite(6, HIGH);
+      }
+      else if(voice == "turn off fan"){
+        digitalWrite(6, LOW);
+      }
+      else if(voice == "turn on all"){
+        digitalWrite(6, HIGH);
+        digitalWrite(5, HIGH);
+      }
+      else if(voice == "turn off all"){
+        digitalWrite(6, LOW);
+        digitalWrite(5, LOW);
+      }
+      voice="";
+}}
